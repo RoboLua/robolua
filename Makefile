@@ -13,7 +13,7 @@ WPI_LIB_VER := 2024.3.2
 NI_LIB_VER := 2024.2.1
 
 all:
-	go build -o build/frcUserProgram go-frc
+	go build -o build/frcUserProgram robolua
 
 kill:
 	ssh -t admin@roborio-$(TEAM)-frc.local "/usr/local/frc/bin/frcKillRobot.sh -t 2> /dev/null" # Kill current robot code

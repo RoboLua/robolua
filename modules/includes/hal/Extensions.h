@@ -10,7 +10,8 @@
  * @defgroup hal_extensions Simulator Extensions
  * @ingroup hal_capi
  * HAL Simulator Extensions.  These are libraries that provide additional
- * simulator functionality.
+ * simulator functionality, such as a Gazebo interface, or a more light weight
+ * simulation.
  *
  * An extension must expose the HALSIM_InitExtension entry point which is
  * invoked after the library is loaded.
@@ -31,7 +32,7 @@ extern "C" {
  * Expected to be called internally, not by users.
  *
  * @param library the library path
- * @return the success state of the initialization
+ * @return the succes state of the initialization
  */
 int HAL_LoadOneExtension(const char* library);
 
@@ -39,7 +40,7 @@ int HAL_LoadOneExtension(const char* library);
  * Loads any extra halsim libraries provided in the HALSIM_EXTENSIONS
  * environment variable.
  *
- * @return the success state of the initialization
+ * @return the succes state of the initialization
  */
 int HAL_LoadExtensions(void);
 

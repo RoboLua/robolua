@@ -20,19 +20,9 @@ extern "C" {
 #endif
 
 /**
- * Reads the current value of the millisecond-resolution timer that the CAN API
- * functions use as a time base.
- *
- * @return Current value of timer used as a base time by the CAN API in
- * milliseconds.
- */
-uint32_t HAL_GetCANPacketBaseTime(void);
-
-/**
  * Initializes a CAN device.
  *
- * These follow the FIRST standard CAN layout.
- * https://docs.wpilib.org/en/stable/docs/software/can-devices/can-addressing.html
+ * These follow the FIRST standard CAN layout. Link TBD
  *
  * @param[in] manufacturer the can manufacturer
  * @param[in] deviceId     the device ID (0-63)
@@ -47,7 +37,7 @@ HAL_CANHandle HAL_InitializeCAN(HAL_CANManufacturer manufacturer,
 /**
  * Frees a CAN device
  *
- * @param[in,out] handle the CAN handle
+ * @param handle the CAN handle
  */
 void HAL_CleanCAN(HAL_CANHandle handle);
 
@@ -120,8 +110,8 @@ void HAL_StopCANPacketRepeating(HAL_CANHandle handle, int32_t apiId,
  * @param[in] apiId              the ID to read (0-1023)
  * @param[out] data              the packet data (8 bytes)
  * @param[out] length            the received length (0-8 bytes)
- * @param[out] receivedTimestamp the packet received timestamp in ms (based off
- *                               of CLOCK_MONOTONIC)
+ * @param[out] receivedTimestamp the packet received timestamp (based off of
+ *                               CLOCK_MONOTONIC)
  * @param[out] status            Error status variable. 0 on success.
  */
 void HAL_ReadCANPacketNew(HAL_CANHandle handle, int32_t apiId, uint8_t* data,
@@ -136,8 +126,8 @@ void HAL_ReadCANPacketNew(HAL_CANHandle handle, int32_t apiId, uint8_t* data,
  * @param[in] apiId              the ID to read (0-1023)
  * @param[out] data              the packet data (8 bytes)
  * @param[out] length            the received length (0-8 bytes)
- * @param[out] receivedTimestamp the packet received timestamp in ms (based off
- *                               of CLOCK_MONOTONIC)
+ * @param[out] receivedTimestamp the packet received timestamp (based off of
+ *                               CLOCK_MONOTONIC)
  * @param[out] status            Error status variable. 0 on success.
  */
 void HAL_ReadCANPacketLatest(HAL_CANHandle handle, int32_t apiId, uint8_t* data,
@@ -153,8 +143,8 @@ void HAL_ReadCANPacketLatest(HAL_CANHandle handle, int32_t apiId, uint8_t* data,
  * @param[in] apiId              the ID to read (0-1023)
  * @param[out] data              the packet data (8 bytes)
  * @param[out] length            the received length (0-8 bytes)
- * @param[out] receivedTimestamp the packet received timestamp in ms (based off
- *                               of CLOCK_MONOTONIC)
+ * @param[out] receivedTimestamp the packet received timestamp (based off of
+ *                               CLOCK_MONOTONIC)
  * @param[out] timeoutMs         the timeout time for the packet
  * @param[out] status            Error status variable. 0 on success.
  */

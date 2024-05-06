@@ -21,8 +21,8 @@ extern "C" {
 /**
  * Initializes an analog gyro.
  *
- * @param[in] handle handle to the analog input port
- * @param[in] allocationLocation the location where the allocation is occurring
+ * @param[in] handle handle to the analog port
+ * @param[in] allocationLocation the location where the allocation is occuring
  *                                (can be null)
  * @param[out] status the error code, or 0 for success
  * @return the initialized gyro handle
@@ -43,7 +43,7 @@ void HAL_SetupAnalogGyro(HAL_GyroHandle handle, int32_t* status);
 /**
  * Frees an analog gyro.
  *
- * @param[in,out] handle the gyro handle
+ * @param handle the gyro handle
  */
 void HAL_FreeAnalogGyro(HAL_GyroHandle handle);
 

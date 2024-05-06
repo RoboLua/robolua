@@ -40,8 +40,8 @@ struct HAL_ControlWord {
 };
 typedef struct HAL_ControlWord HAL_ControlWord;
 
+// clang-format off
 HAL_ENUM(HAL_AllianceStationID) {
-  HAL_AllianceStationID_kUnknown = 0,
   HAL_AllianceStationID_kRed1,
   HAL_AllianceStationID_kRed2,
   HAL_AllianceStationID_kRed3,
@@ -51,11 +51,12 @@ HAL_ENUM(HAL_AllianceStationID) {
 };
 
 HAL_ENUM(HAL_MatchType) {
-  HAL_kMatchType_none = 0,
+  HAL_kMatchType_none,
   HAL_kMatchType_practice,
   HAL_kMatchType_qualification,
   HAL_kMatchType_elimination,
 };
+// clang-format on
 
 /* The maximum number of axes that will be stored in a single HALJoystickAxes
  * struct. This is used for allocating buffers, not bounds checking, since
@@ -68,7 +69,6 @@ HAL_ENUM(HAL_MatchType) {
 struct HAL_JoystickAxes {
   int16_t count;
   float axes[HAL_kMaxJoystickAxes];
-  uint8_t raw[HAL_kMaxJoystickAxes];
 };
 typedef struct HAL_JoystickAxes HAL_JoystickAxes;
 

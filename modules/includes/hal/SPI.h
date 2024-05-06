@@ -90,27 +90,23 @@ void HAL_CloseSPI(HAL_SPIPort port);
  *
  * @param port  The number of the port to use. 0-3 for Onboard CS0-CS2, 4 for
  *              MXP
- * @param speed The speed in Hz (500KHz-10MHz)
+ * @param speed The speed in Hz (0-1MHz)
  */
 void HAL_SetSPISpeed(HAL_SPIPort port, int32_t speed);
 
 /**
- * Sets the SPI Mode.
+ * Sets the SPI options.
  *
- * @param port  The number of the port to use. 0-3 for Onboard CS0-CS2, 4 for
- * MXP
- * @param mode  The SPI mode to use
+ * @param port             The number of the port to use. 0-3 for Onboard
+ *                         CS0-CS2, 4 for MXP
+ * @param msbFirst         True to write the MSB first, False for LSB first
+ * @param sampleOnTrailing True to sample on the trailing edge, False to sample
+ *                         on the leading edge
+ * @param clkIdleHigh      True to set the clock to active low, False to set the
+ *                         clock active high
  */
-void HAL_SetSPIMode(HAL_SPIPort port, HAL_SPIMode mode);
-
-/**
- * Gets the SPI Mode.
- *
- * @param port  The number of the port to use. 0-3 for Onboard CS0-CS2, 4 for
- * MXP
- * @return      The SPI mode currently set
- */
-HAL_SPIMode HAL_GetSPIMode(HAL_SPIPort port);
+void HAL_SetSPIOpts(HAL_SPIPort port, HAL_Bool msbFirst,
+                    HAL_Bool sampleOnTrailing, HAL_Bool clkIdleHigh);
 
 /**
  * Sets the CS Active high for a SPI port.
@@ -172,7 +168,7 @@ void HAL_FreeSPIAuto(HAL_SPIPort port, int32_t* status);
  *
  * @param[in] port    The number of the port to use. 0-3 for Onboard CS0-CS2, 4
  *                    for MXP.
- * @param[in] period  The accumulation period (seconds).
+ * @param[in] period  The accumlation period (seconds).
  * @param[out] status the error code, or 0 for success
  */
 void HAL_StartSPIAutoRate(HAL_SPIPort port, double period, int32_t* status);
@@ -199,7 +195,7 @@ void HAL_StartSPIAutoTrigger(HAL_SPIPort port, HAL_Handle digitalSourceHandle,
                              int32_t* status);
 
 /**
- * Stops an automatic SPI accumulation.
+ * Stops an automatic SPI accumlation.
  *
  * @param[in] port    The number of the port to use. 0-3 for Onboard CS0-CS2, 4
  *                    for MXP.

@@ -18,7 +18,7 @@
 #include <cstdint>
 #include <algorithm>
 #include <cassert>
-#include <limits>
+#include <climits>
 #include <cmath>
 #include <cstring>
 #include <limits>

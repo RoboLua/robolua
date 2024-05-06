@@ -4,14 +4,8 @@
 
 #pragma once
 
-#include <cstddef>
-
-#include "hal/LEDs.h"
 #include "hal/Types.h"
 #include "hal/simulation/NotifyListener.h"
-
-typedef void (*HAL_RoboRioStringCallback)(const char* name, void* param,
-                                          const char* str, size_t size);
 
 #ifdef __cplusplus
 extern "C" {
@@ -127,41 +121,9 @@ void HALSIM_CancelRoboRioBrownoutVoltageCallback(int32_t uid);
 double HALSIM_GetRoboRioBrownoutVoltage(void);
 void HALSIM_SetRoboRioBrownoutVoltage(double brownoutVoltage);
 
-int32_t HALSIM_RegisterRoboRioTeamNumberCallback(HAL_NotifyCallback callback,
-                                                 void* param,
-                                                 HAL_Bool initialNotify);
-void HALSIM_CancelRoboRioTeamNumberCallback(int32_t uid);
-int32_t HALSIM_GetRoboRioTeamNumber(void);
-void HALSIM_SetRoboRioTeamNumber(int32_t teamNumber);
-
-int32_t HALSIM_RegisterRoboRioSerialNumberCallback(
-    HAL_RoboRioStringCallback callback, void* param, HAL_Bool initialNotify);
-void HALSIM_CancelRoboRioSerialNumberCallback(int32_t uid);
-size_t HALSIM_GetRoboRioSerialNumber(char* buffer, size_t size);
-void HALSIM_SetRoboRioSerialNumber(const char* serialNumber, size_t size);
-
-int32_t HALSIM_RegisterRoboRioCommentsCallback(
-    HAL_RoboRioStringCallback callback, void* param, HAL_Bool initialNotify);
-void HALSIM_CancelRoboRioCommentsCallback(int32_t uid);
-size_t HALSIM_GetRoboRioComments(char* buffer, size_t size);
-void HALSIM_SetRoboRioComments(const char* comments, size_t size);
-
-int32_t HALSIM_RegisterRoboRioCPUTempCallback(HAL_NotifyCallback callback,
-                                              void* param,
-                                              HAL_Bool initialNotify);
-void HALSIM_CancelRoboRioCPUTempCallback(int32_t uid);
-double HALSIM_GetRoboRioCPUTemp(void);
-void HALSIM_SetRoboRioCPUTemp(double cpuTemp);
-
-int32_t HALSIM_RegisterRoboRioRadioLEDStateCallback(HAL_NotifyCallback callback,
-                                                    void* param,
-                                                    HAL_Bool initialNotify);
-void HALSIM_CancelRoboRioRadioLEDStateCallback(int32_t uid);
-HAL_RadioLEDState HALSIM_GetRoboRioRadioLEDState(void);
-void HALSIM_SetRoboRioRadioLEDState(HAL_RadioLEDState state);
-
 void HALSIM_RegisterRoboRioAllCallbacks(HAL_NotifyCallback callback,
                                         void* param, HAL_Bool initialNotify);
+
 #ifdef __cplusplus
 }  // extern "C"
 #endif

@@ -15,6 +15,7 @@
  * @{
  */
 
+// clang-format off
 /**
  * The counter mode.
  */
@@ -24,6 +25,7 @@ HAL_ENUM(HAL_Counter_Mode) {
   HAL_Counter_kPulseLength = 2,
   HAL_Counter_kExternalDirection = 3
 };
+// clang-format on
 
 #ifdef __cplusplus
 extern "C" {
@@ -231,7 +233,7 @@ void HAL_ResetCounter(HAL_CounterHandle counterHandle, int32_t* status);
  */
 int32_t HAL_GetCounter(HAL_CounterHandle counterHandle, int32_t* status);
 
-/**
+/*
  * Gets the Period of the most recent count.
  *
  * Returns the time interval of the most recent count. This can be used for

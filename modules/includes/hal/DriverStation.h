@@ -6,10 +6,6 @@
 
 #include <stdint.h>
 
-#include <stddef.h>  //NOLINT
-
-#include <wpi/Synchronization.h>
-
 #include "hal/DriverStationTypes.h"
 #include "hal/Types.h"
 
@@ -30,35 +26,25 @@ extern "C" {
  * @param errorCode the error code
  * @param isLVCode  true for a LV error code, false for a standard error code
  * @param details   the details of the error
- * @param location  the file location of the error
+ * @param location  the file location of the errror
  * @param callStack the callstack of the error
  * @param printMsg  true to print the error message to stdout as well as to the
  * DS
- * @return the error code, or 0 for success
  */
 int32_t HAL_SendError(HAL_Bool isError, int32_t errorCode, HAL_Bool isLVCode,
                       const char* details, const char* location,
                       const char* callStack, HAL_Bool printMsg);
-
-/**
- * Set the print function used by HAL_SendError
- *
- * @param func Function called by HAL_SendError when stderr is printed
- */
-void HAL_SetPrintErrorImpl(void (*func)(const char* line, size_t size));
-
 /**
  * Sends a line to the driver station console.
  *
  * @param line the line to send (null terminated)
- * @return the error code, or 0 for success
  */
 int32_t HAL_SendConsoleLine(const char* line);
 
 /**
  * Gets the current control word of the driver station.
  *
- * The control word contains the robot state.
+ * The control work contains the robot state.
  *
  * @param controlWord the control word (out)
  * @return the error code, or 0 for success
@@ -101,9 +87,6 @@ int32_t HAL_GetJoystickPOVs(int32_t joystickNum, HAL_JoystickPOVs* povs);
 int32_t HAL_GetJoystickButtons(int32_t joystickNum,
                                HAL_JoystickButtons* buttons);
 
-void HAL_GetAllJoystickData(HAL_JoystickAxes* axes, HAL_JoystickPOVs* povs,
-                            HAL_JoystickButtons* buttons);
-
 /**
  * Retrieves the Joystick Descriptor for particular slot.
  *
@@ -121,7 +104,7 @@ int32_t HAL_GetJoystickDescriptor(int32_t joystickNum,
                                   HAL_JoystickDescriptor* desc);
 
 /**
- * Gets whether a specific joystick is considered to be an XBox controller.
+ * Gets is a specific joystick is considered to be an XBox controller.
  *
  * @param joystickNum the joystick number
  * @return true if xbox, false otherwise
@@ -183,34 +166,22 @@ int32_t HAL_SetJoystickOutputs(int32_t joystickNum, int64_t outputs,
                                int32_t leftRumble, int32_t rightRumble);
 
 /**
- * Return the approximate match time. The FMS does not send an official match
- * time to the robots, but does send an approximate match time. The value will
- * count down the time remaining in the current period (auto or teleop).
+ * Returns the approximate match time.
+ *
+ * The FMS does not send an official match time to the robots, but does send
+ * an approximate match time. The value will count down the time remaining in
+ * the current period (auto or teleop).
+ *
  * Warning: This is not an official time (so it cannot be used to dispute ref
  * calls or guarantee that a function will trigger before the match ends).
  *
- * <p>When connected to the real field, this number only changes in full integer
- * increments, and always counts down.
- *
- * <p>When the DS is in practice mode, this number is a floating point number,
- * and counts down.
- *
- * <p>When the DS is in teleop or autonomous mode, this number is a floating
- * point number, and counts up.
- *
- * <p>Simulation matches DS behavior without an FMS connected.
+ * The Practice Match function of the DS approximates the behavior seen on
+ * the field.
  *
  * @param[out] status the error code, or 0 for success
- * @return Time remaining in current match period (auto or teleop) in seconds
+ * @return time remaining in current match period (auto or teleop)
  */
 double HAL_GetMatchTime(int32_t* status);
-
-/**
- * Gets if outputs are enabled by the control system.
- *
- * @return true if outputs are enabled
- */
-HAL_Bool HAL_GetOutputsEnabled(void);
 
 /**
  * Gets info about a specific match.
@@ -221,14 +192,43 @@ HAL_Bool HAL_GetOutputsEnabled(void);
 int32_t HAL_GetMatchInfo(HAL_MatchInfo* info);
 
 /**
- * Refresh the DS control word.
- *
- * @return true if updated
+ * Releases the DS Mutex to allow proper shutdown of any threads that are
+ * waiting on it.
  */
-HAL_Bool HAL_RefreshDSData(void);
+void HAL_ReleaseDSMutex(void);
 
-void HAL_ProvideNewDataEventHandle(WPI_EventHandle handle);
-void HAL_RemoveNewDataEventHandle(WPI_EventHandle handle);
+/**
+ * Has a new control packet from the driver station arrived since the last
+ * time this function was called?
+ *
+ * @return true if the control data has been updated since the last call
+ */
+HAL_Bool HAL_IsNewControlData(void);
+
+/**
+ * Waits for the newest DS packet to arrive. Note that this is a blocking call.
+ * Checks if new control data has arrived since the last HAL_WaitForDSData or
+ * HAL_IsNewControlData call. If new data has not arrived, waits for new data
+ * to arrive. Otherwise, returns immediately.
+ */
+void HAL_WaitForDSData(void);
+
+/**
+ * Waits for the newest DS packet to arrive. If timeout is <= 0, this will wait
+ * forever. Otherwise, it will wait until either a new packet, or the timeout
+ * time has passed.
+ *
+ * @param[in] timeout timeout in seconds
+ * @return true for new data, false for timeout
+ */
+HAL_Bool HAL_WaitForDSDataTimeout(double timeout);
+
+/**
+ * Initializes the driver station communication. This will properly
+ * handle multiple calls. However note that this CANNOT be called from a library
+ * that interfaces with LabVIEW.
+ */
+void HAL_InitializeDriverStation(void);
 
 /**
  * Sets the program starting flag in the DS.

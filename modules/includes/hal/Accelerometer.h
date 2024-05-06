@@ -12,6 +12,7 @@
  * @{
  */
 
+// clang-format off
 /**
  * The acceptable accelerometer ranges.
  */
@@ -20,6 +21,7 @@ HAL_ENUM(HAL_AccelerometerRange) {
   HAL_AccelerometerRange_k4G = 1,
   HAL_AccelerometerRange_k8G = 2,
 };
+// clang-format on
 
 #ifdef __cplusplus
 extern "C" {
