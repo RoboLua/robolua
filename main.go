@@ -1,10 +1,5 @@
 package main
 
-// #cgo CFLAGS: -I${SRCDIR}/include
-// #cgo LDFLAGS: -L${SRCDIR}/../../build -lwpiHal -lwpiutil -lstdc++ -ldl -lm -lFRC_NetworkCommunication -lembcanshim -lfpgalvshim -lRoboRIO_FRC_ChipObject -lvisa
-// #include "hal.h"
-import "C"
-
 import (
 	"log"
 	"os"
@@ -35,10 +30,14 @@ func main() {
 	}
 
 
+	modules.InitalizeHal();
+
 	if err := L.CallByParam(lua.P{
 		Fn: robotMain,
 		NRet: 0,
 	}); err != nil {
 		log.Fatal("Error running main function", "err", err);
 	}
+
+
 }
